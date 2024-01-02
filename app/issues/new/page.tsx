@@ -35,8 +35,10 @@ const NewIssue = () => {
         const response=await axios.post('/api/issues',data);
         router.push("/issues")
       } catch (error) {
-        setIsSubmitting(false)
         setError("A unexpected error has occured")
+      }
+      finally{
+        setIsSubmitting(false)
       }
     })}>
         <TextField.Root>
