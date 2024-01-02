@@ -1,26 +1,28 @@
 'use client'
-import { TextField,Button, CalloutText,Callout } from '@radix-ui/themes'
+import { TextField,Button, CalloutText,Callout, Text } from '@radix-ui/themes'
 import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 import {useForm,Controller} from 'react-hook-form'
 import "easymde/dist/easymde.min.css";
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { issueSchema } from '@/app/validationSchemas'
+import {z} from "zod"
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false }) 
 
-interface issueType{
-  title:string,
-  description:string
-}
+type issueType=z.infer<typeof issueSchema>
 
 const NewIssue = () => {
   const router=useRouter();
   const [error,setError]=useState("");
-  const {register,control,handleSubmit}=useForm<issueType>();
+  const {register,control,handleSubmit,formState:{errors}}=useForm<issueType>({
+    resolver:zodResolver(issueSchema)
+  });
   
   return (
     <div className="max-w-xl">
-      {error && <Callout.Root color='red '>
+      {error && <Callout.Root color='red'>
         <CalloutText>{error}</CalloutText>
         </Callout.Root>}
     <form className=' space-y-3' 
@@ -35,7 +37,9 @@ const NewIssue = () => {
         <TextField.Root>
           <TextField.Input placeholder='Title'  {...register('title')}></TextField.Input>
         </TextField.Root>
+        {errors.title && <Text color='red' as='p'>{errors.title.message}</Text>}
         <Controller  name='description' control={control} render={({field})=> <SimpleMDE  placeholder='description' {...field}  />}/>
+        {errors.description && <Text color='red' as="p"> {errors.description.message}</Text>}
         <Button>Submit</Button>
     </form>
         </div>
