@@ -9,6 +9,7 @@ import axios from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { issueSchema } from '@/app/validationSchemas'
 import {z} from "zod"
+import Spinner from '@/app/components/Spinner'
 import ErrorMessage from '@/app/components/ErrorMessage'
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false }) 
 
@@ -17,6 +18,7 @@ type issueType=z.infer<typeof issueSchema>
 const NewIssue = () => {
   const router=useRouter();
   const [error,setError]=useState("");
+  const [isSubmitting,setIsSubmitting]=useState(false);
   const {register,control,handleSubmit,formState:{errors}}=useForm<issueType>({
     resolver:zodResolver(issueSchema)
   });
@@ -29,9 +31,11 @@ const NewIssue = () => {
     <form className=' space-y-3' 
     onSubmit={handleSubmit( async(data)=>{
       try {
+        setIsSubmitting(true)
         const response=await axios.post('/api/issues',data);
         router.push("/issues")
       } catch (error) {
+        setIsSubmitting(false)
         setError("A unexpected error has occured")
       }
     })}>
@@ -41,7 +45,7 @@ const NewIssue = () => {
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller  name='description' control={control} render={({field})=> <SimpleMDE  placeholder='description' {...field}  />}/>
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button>Submit</Button>
+        <Button disabled={isSubmitting}>Submit{isSubmitting && <Spinner></Spinner>}</Button>
     </form>
         </div>
   )
