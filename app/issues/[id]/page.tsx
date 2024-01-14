@@ -1,8 +1,9 @@
 import prisma from '@/prisma/client';
-import { Box, Grid } from '@radix-ui/themes';
+import { Box, Flex, Grid } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
 import Issuedetails from './Issuedetails';
 import IssueEditButton from './IssueEditButton';
+import DelteIssueButton from './DeleteIssueButton';
 
 interface Props {
   params: { id: string };
@@ -21,10 +22,16 @@ const IssueDetailPage = async ({ params }: Props) => {
         <Issuedetails issue={issue} />
       </Box>
       <Box>
+        <Flex gap="4">
         <IssueEditButton params={{ id: `${issue.id}` }} />
+        <DelteIssueButton issueId={issue.id}/> 
+        </Flex>
       </Box>
     </Grid>
   );
 };
+
+export const dynamic = 'force-dynamic'
+
 
 export default IssueDetailPage;

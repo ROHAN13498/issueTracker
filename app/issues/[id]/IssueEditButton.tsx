@@ -12,7 +12,7 @@ const IssueEditButton = ({params}:props) => {
     <div>
          <Button>
             <Pencil1Icon></Pencil1Icon>
-            <Link href={`/issues/${params.id}/edit`}>Edit</Link>
+            <Link href={`/issues/${params.id}/edit`}>Edit Issue</Link>
           </Button>
     </div>
   )
