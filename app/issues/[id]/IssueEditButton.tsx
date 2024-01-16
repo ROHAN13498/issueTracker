@@ -1,21 +1,14 @@
-import { Pencil1Icon } from '@radix-ui/react-icons'
-import { Button } from '@radix-ui/themes'
-import Link from 'next/link'
-import React from 'react'
+import { Pencil2Icon } from '@radix-ui/react-icons';
+import { Button } from '@radix-ui/themes';
+import Link from 'next/link';
 
-interface props{
-  params:{id:string}
-}
-
-const IssueEditButton = ({params}:props) => {
+const EditIssueButton = ({ issueId }: { issueId: number }) => {
   return (
-    <div>
-         <Button>
-            <Pencil1Icon></Pencil1Icon>
-            <Link href={`/issues/${params.id}/edit`}>Edit Issue</Link>
-          </Button>
-    </div>
-  )
-}
+    <Button>
+      <Pencil2Icon />
+      <Link href={`/issues/edit/${issueId}`}>Edit Issue</Link>
+    </Button>
+  );
+};
 
-export default IssueEditButton
+export default EditIssueButton;

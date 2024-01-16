@@ -1,7 +1,5 @@
-import { Status } from '@prisma/client'
-import React from 'react'
-import { Badge } from '@radix-ui/themes'
-import { Stats, stat } from 'fs';
+import { Status } from '@prisma/client';
+import { Badge } from '@radix-ui/themes';
 
 interface Props{
     status:Status

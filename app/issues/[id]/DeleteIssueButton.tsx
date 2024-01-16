@@ -1,11 +1,10 @@
 'use client';
 
-import Spinner from '@/app/components/Spinner';
+import  Spinner  from '@/app/components/Spinner';
 import { AlertDialog, Button, Flex } from '@radix-ui/themes';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { TrashIcon } from '@radix-ui/react-icons';
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
   const router = useRouter();
@@ -16,7 +15,7 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
     try {
       setDeleting(true);
       await axios.delete('/api/issues/' + issueId);
-      router.push('/issues');
+      router.push('/issues/list');
       router.refresh();
     } catch (error) {
       setDeleting(false);
@@ -29,7 +28,7 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
       <AlertDialog.Root>
         <AlertDialog.Trigger>
           <Button color="red" disabled={isDeleting}>
-            <TrashIcon/>Delete Issue
+            Delete Issue
             {isDeleting && <Spinner />}
           </Button>
         </AlertDialog.Trigger>
@@ -39,7 +38,7 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
             Are you sure you want to delete this issue? This action cannot be
             undone.
           </AlertDialog.Description>
-          <Flex mt="4" gap="3" justify="end">
+          <Flex mt="4" gap="3">
             <AlertDialog.Cancel>
               <Button variant="soft" color="gray">
                 Cancel
