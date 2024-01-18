@@ -1,6 +1,6 @@
 import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
-import Link from "next/link";
+import Link from "../components/Link";
 import NextLink from "next/link";
 import IssueStatusBadge from "../components/IssueStatusBadge";
 import React from 'react'
