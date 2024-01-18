@@ -13,7 +13,8 @@ const authOptions :NextAuthOptions={
     ],
     session:{
         strategy:"jwt"
-    }
+    },
+    secret:"randomString"
   }
 
   export default authOptions;
