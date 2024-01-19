@@ -4,9 +4,9 @@ import prisma from "@/prisma/client";
 import { NextAuthOptions } from "next-auth";
 
 const authOptions :NextAuthOptions={
-
-    adapter: PrismaAdapter(prisma),
-    
+  
+  adapter: PrismaAdapter(prisma),
+  secret:process.env.NEXTAUTH_SECRET!,
     providers: [
       GoogleProvider({
         clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -15,8 +15,7 @@ const authOptions :NextAuthOptions={
     ],
     session:{
         strategy:"jwt"
-    },
-    secret:"randomString"
+    }
   }
 
   export default authOptions;
